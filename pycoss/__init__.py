@@ -3,6 +3,17 @@ import code
 import atexit
 import os.path
 
+HISTORY_CONSOLE_COMMANDS = []
+
+
+def history_completer(text, state):
+    global HISTORY_CONSOLE_COMMANDS
+    possibilities = [cmd for cmd in HISTORY_CONSOLE_COMMANDS if cmd.startswith(text)]
+    if state < len(possibilities):
+        return possibilities[state]
+    return None
+
+
 class HistoryConsole(code.InteractiveConsole):
     def __init__(self, locals=None, filename="<console>",
                  histfile=os.path.expanduser("~/.console_history")):
@@ -11,6 +22,7 @@ class HistoryConsole(code.InteractiveConsole):
 
     def init_history(self, histfile):
         readline.parse_and_bind("tab: complete")
+        readline.set_completer(history_completer)
         if hasattr(readline, "read_history_file"):
             try:
                 readline.read_history_file(histfile)
@@ -20,6 +32,13 @@ class HistoryConsole(code.InteractiveConsole):
 
     def save_history(self, histfile):
         readline.write_history_file(histfile)
+
+    def set_tab_completes(self, commands):
+        global HISTORY_CONSOLE_COMMANDS
+        HISTORY_CONSOLE_COMMANDS = commands
+
+    def get_tab_completes(self):
+        return self.tab_completes
 
 
 class ArgumentError(Exception):
