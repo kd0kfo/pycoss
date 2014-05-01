@@ -72,3 +72,14 @@ class CommandRunner(object):
             raise ArgumentError(errmsg)
         if not can_have_more and numargs != size:
             raise ArgumentError(errmsg)
+
+
+def webfile(url):
+    """
+    Downloads content from the provided URL and returns a file type
+    object containing the contents
+    """
+
+    import urllib
+    return urllib.urlopen(url)
+

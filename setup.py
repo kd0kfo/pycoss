@@ -18,7 +18,7 @@ class Tester(Command):
 the_scripts = []
 
 setup (name ='pycoss',
-       version = '1.0.0',
+       version = '1.1.0',
        url = 'https://github.com/kd0kfo/pycoss',
        license = 'GPL v3',
        description = 'Commonly used python code not found else where.',
