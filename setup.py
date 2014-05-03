@@ -15,10 +15,10 @@ class Tester(Command):
     def run(self):
         print("No tests yet")
 
-the_scripts = []
+the_scripts = ['scripts/bookmarks']
 
 setup (name ='pycoss',
-       version = '1.1.0',
+       version = '1.2.0',
        url = 'https://github.com/kd0kfo/pycoss',
        license = 'GPL v3',
        description = 'Commonly used python code not found else where.',

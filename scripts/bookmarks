@@ -1,0 +1,41 @@
+#!/usr/bin/env python
+
+from sys import argv
+from os.path import isfile
+from pycoss import webfile
+import json
+
+
+def print_bookmark(book, bookmark):
+   print(book)
+   for (key, val) in bookmark.iteritems():
+      print("%s: %s" % (key, val))
+
+
+if len(argv) == 1:
+   print("Usage: bookmarks <File or URL>")
+   exit(1)
+
+url = argv[1]
+book = None
+if len(argv) > 2:
+   book = " ".join(argv[2:])
+
+thefile = None
+if isfile(url):
+   thefile = open(url, "r")
+else:
+   thefile = webfile(url)
+
+bookmarks = json.load(thefile)
+
+if book:
+   if not book in bookmarks:
+      print("Bookmark not found: %s" % book)
+   else:
+      print_bookmark(book, bookmarks[book])
+else:
+   for B in bookmarks:
+      print_bookmark(B, bookmarks[B])
+thefile.close()
+   
